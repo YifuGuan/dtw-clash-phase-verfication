@@ -146,7 +146,9 @@ public class DtwDistanceCounter {
 
         // 随后从右下角出发，根据贪心算法寻找最短路径
         List<Double> path = getShortestPath(seqMatrix);
-        System.out.println(path);
+
+        // 算出路径上的修正距离和
+        for (Double point : path) dtwDistance += point;
 
         return dtwDistance;
     }
