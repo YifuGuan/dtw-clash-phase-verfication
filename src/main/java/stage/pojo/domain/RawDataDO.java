@@ -1,17 +1,17 @@
 package stage.pojo.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 /**
  * @author 刀氏春秋
  * @date 2023/7/11
- * 算法直接使用的DO数据
+ * 算法直接使用的DO数据，未处理
  */
-@Data
-public class RawDataDO {
-    private String assetNo;
-    private String tgId;
-    private List<Double> points;
+public class RawDataDO extends DataDO {
+    public RawDataDO() {
+        super();
+    }
 }

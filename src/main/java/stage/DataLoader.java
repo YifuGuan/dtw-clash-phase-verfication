@@ -13,6 +13,8 @@ import java.util.List;
  * @author 刀氏春秋
  * @date 2023/7/11
  * 第一阶段，用以读取数据，分Excel数据导入和DTO直接导入
+ * 输入：MeterDataDTO数据列表（实际）/TgNo后四位（调试）
+ * 输出：RawDataDO数据列表
  * 将其转变为利于算法使用的DO
  */
 public class DataLoader {
@@ -29,7 +31,7 @@ public class DataLoader {
         // 通过EasyExcel读取数据表
         System.out.println("开始加载");
         try {
-            EasyExcel.read("src/main/resources/voltage-" + tg +".xlsx", MeterDataDTO.class, new ReadListener<MeterDataDTO>() {
+            EasyExcel.read("src/main/resources/voltage-" + tg + ".xlsx", MeterDataDTO.class, new ReadListener<MeterDataDTO>() {
                 @Override
                 public void invoke(MeterDataDTO tuple, AnalysisContext analysisContext) {
                     // 只导入总表和单相表
@@ -69,7 +71,7 @@ public class DataLoader {
             List<Double> points = new LinkedList<>();
             try {
                 for (int index = 1; index <= 96; index++) {
-                    // 反射式调用getter获取数据点
+                    // 反射式调用getter获取数据点，注，该步可能引入空值点
                     points.add((Double) MeterDataDTO.class.getDeclaredMethod("getI" + index).invoke(tuple));
                 }
             } catch (Exception e) {
