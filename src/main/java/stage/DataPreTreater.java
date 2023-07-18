@@ -1,6 +1,5 @@
 package stage;
 
-import stage.pojo.domain.DataDO;
 import stage.pojo.domain.RawDataDO;
 import utils.CopyUtil;
 
@@ -37,7 +36,7 @@ public class DataPreTreater {
             }
 
             // 将处理后数据添加到结果列表中
-            CopyUtil.copyHeaders(tuple, result);
+            CopyUtil.copyHeadersToDataTuple(tuple, result);
             results.add(result);
         }
         return results;
@@ -76,7 +75,7 @@ public class DataPreTreater {
             }
 
             // 将处理后数据添加到结果列表中
-            CopyUtil.copyHeaders(tuple, result);
+            CopyUtil.copyHeadersToDataTuple(tuple, result);
             results.add(result);
         }
         return results;

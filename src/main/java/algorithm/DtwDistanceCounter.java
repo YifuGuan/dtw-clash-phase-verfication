@@ -1,5 +1,7 @@
 package algorithm;
 
+import utils.MathUtil;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,34 +13,6 @@ import java.util.List;
  * 因此新的算法考虑到数据的时序特征，采用DTW距离分析曲线相似性
  */
 public class DtwDistanceCounter {
-    /**
-     * 求解三个浮点数最小值，并返回该值
-     *
-     * @param a 第一个参数
-     * @param b 第二个参数
-     * @param c 第三个参数
-     * @return 最小值数值
-     */
-    private Double minThreeDoubleValue(Double a, Double b, Double c) {
-        if (a < b && a < c) return a;
-        else if (b < a && b < c) return b;
-        else return c;
-    }
-
-    /**
-     * 求解三个浮点数最小值，返回该值所在位置
-     *
-     * @param a 第一个参数
-     * @param b 第二个参数
-     * @param c 第三个参数
-     * @return 第几个参数是最小的（1起始编号）
-     */
-    private Integer minThreeDoublePos(Double a, Double b, Double c) {
-        if (a < b && a < c) return 1;
-        else if (b < a && b < c) return 2;
-        else return 3;
-    }
-
     /**
      * 输出序列比较矩阵，用于调试
      *
@@ -81,7 +55,7 @@ public class DtwDistanceCounter {
                     seqMatrix[i][j] += seqMatrix[i][j - 1];
                 } else {
                     // 其他一般情况，不触及边界，要找出左，左上，上三个值中的最小值
-                    seqMatrix[i][j] += minThreeDoubleValue(seqMatrix[i - 1][j], seqMatrix[i - 1][j - 1], seqMatrix[i][j - 1]);
+                    seqMatrix[i][j] += MathUtil.minThreeDoubleValue(seqMatrix[i - 1][j], seqMatrix[i - 1][j - 1], seqMatrix[i][j - 1]);
                 }
             }
         }
@@ -111,7 +85,7 @@ public class DtwDistanceCounter {
                 path.add(seqMatrix[--i][j]);
             } else {
                 // 第三种情况，i和j都不为0，属于常规情况，此时寻找最小的方向移动
-                switch (minThreeDoublePos(seqMatrix[i - 1][j], seqMatrix[i - 1][j - 1], seqMatrix[i][j - 1])) {
+                switch (MathUtil.minThreeDoublePos(seqMatrix[i - 1][j], seqMatrix[i - 1][j - 1], seqMatrix[i][j - 1])) {
                     case 1:
                         // 左值最小，向左移动
                         path.add(seqMatrix[--i][j]);
