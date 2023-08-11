@@ -1,9 +1,4 @@
-package stage.pojo.domain;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.util.List;
+package models.pojo.domain;
 
 /**
  * @author 刀氏春秋

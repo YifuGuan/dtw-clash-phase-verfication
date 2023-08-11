@@ -1,8 +1,8 @@
-package stage;
+package models.phaseVerfication;
 
 import algorithm.DtwDistanceCounter;
-import stage.pojo.domain.RawDataDO;
-import stage.pojo.domain.ResultDO;
+import models.pojo.domain.RawDataDO;
+import models.pojo.domain.ResultDO;
 import utils.CopyUtil;
 import utils.MathUtil;
 

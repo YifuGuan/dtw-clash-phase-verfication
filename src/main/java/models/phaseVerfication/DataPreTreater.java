@@ -1,6 +1,6 @@
-package stage;
+package models.phaseVerfication;
 
-import stage.pojo.domain.RawDataDO;
+import models.pojo.domain.RawDataDO;
 import utils.CopyUtil;
 
 import java.util.LinkedList;

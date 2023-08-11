@@ -1,10 +1,10 @@
-package stage;
+package models.publicModels;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import stage.pojo.domain.RawDataDO;
-import stage.pojo.dto.MeterDataDTO;
+import models.pojo.domain.RawDataDO;
+import models.pojo.dto.MeterDataDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,20 +18,12 @@ import java.util.List;
  * 将其转变为利于算法使用的DO
  */
 public class DataLoader {
-    /**
-     * 读取Excel数据
-     *
-     * @param tg 台区四位尾号
-     * @return 电表采集原始数据
-     */
-    private List<MeterDataDTO> loadDataFromExcel(String tg) {
-        // 首先读取出originData，再将其转化为rawData
+    private List<MeterDataDTO> loadDataFromExcel(String filename) {
         List<MeterDataDTO> originData = new LinkedList<>();
 
-        // 通过EasyExcel读取数据表
         System.out.println("开始加载");
         try {
-            EasyExcel.read("src/main/resources/voltage-" + tg + ".xlsx", MeterDataDTO.class, new ReadListener<MeterDataDTO>() {
+            EasyExcel.read(filename, MeterDataDTO.class, new ReadListener<MeterDataDTO>() {
                 @Override
                 public void invoke(MeterDataDTO tuple, AnalysisContext analysisContext) {
                     // 只导入总表和单相表
@@ -47,7 +39,29 @@ public class DataLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return originData;
+    }
+
+    /**
+     * 读取电压数据
+     *
+     * @param tg 台区四位尾号
+     * @return 电表电压采集原始数据
+     */
+    protected List<MeterDataDTO> loadVoltageDataFromExcel(String tg) {
+        // 首先读取出originData，再将其转化为rawData
+        return loadDataFromExcel("src/main/resources/voltage-" + tg + ".xlsx");
+    }
+
+    /**
+     * 读取电流数据
+     *
+     * @param tg 台区四位尾号
+     * @return 电表电流采集原始数据
+     */
+    protected List<MeterDataDTO> loadCurrentDataFromExcel(String tg) {
+        return loadDataFromExcel("src/main/resource/current-" + tg + ".xlsx");
     }
 
     /**
@@ -56,7 +70,7 @@ public class DataLoader {
      * @param originData 原始数据列表
      * @return 算法用数据列表
      */
-    private List<RawDataDO> transferData(List<MeterDataDTO> originData) {
+    protected List<RawDataDO> transferData(List<MeterDataDTO> originData) {
         // 将原始数据转化为生数据
         List<RawDataDO> rawData = new LinkedList<>();
 
@@ -82,27 +96,5 @@ public class DataLoader {
         }
 
         return rawData;
-    }
-
-    /**
-     * 数据导入重载1，通过Excel读取，需要给定tgNo后四位（同文件命名有关）
-     * 文件放置在resources根目录下
-     * 注：该模式仅供调试用
-     *
-     * @param tgNo 台区编号后四位
-     * @return 算法可用数据列表
-     */
-    public List<RawDataDO> importData(String tgNo) {
-        return transferData(loadDataFromExcel(tgNo));
-    }
-
-    /**
-     * 数据导入重载2，直接给出DTO数据，给用户使用的接口
-     *
-     * @param originData 原始数据列表
-     * @return 算法可用数据列表
-     */
-    public List<RawDataDO> importData(List<MeterDataDTO> originData) {
-        return transferData(originData);
     }
 }

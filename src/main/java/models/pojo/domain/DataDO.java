@@ -1,4 +1,4 @@
-package stage.pojo.domain;
+package models.pojo.domain;
 
 import lombok.Data;
 
