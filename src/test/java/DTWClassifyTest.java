@@ -1,6 +1,5 @@
 import models.phaseVerfication.RawDataLoader;
 import org.junit.jupiter.api.Test;
-import models.publicModels.DataLoader;
 import models.phaseVerfication.DataPreTreater;
 import models.phaseVerfication.DistanceCalculator;
 import models.phaseVerfication.ResultExporter;
@@ -15,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author 刀氏春秋
  * @date 2023/7/11
  */
-public class ProgressTest {
+public class DTWClassifyTest {
     RawDataLoader loader = new RawDataLoader();
     DataPreTreater preTreater = new DataPreTreater();
     DistanceCalculator calculator = new DistanceCalculator();

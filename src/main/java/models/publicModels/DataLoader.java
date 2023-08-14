@@ -61,7 +61,7 @@ public class DataLoader {
      * @return 电表电流采集原始数据
      */
     protected List<MeterDataDTO> loadCurrentDataFromExcel(String tg) {
-        return loadDataFromExcel("src/main/resource/current-" + tg + ".xlsx");
+        return loadDataFromExcel("src/main/resources/current-" + tg + ".xlsx");
     }
 
     /**

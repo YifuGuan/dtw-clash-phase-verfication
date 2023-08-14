@@ -22,11 +22,22 @@ public class SeqDataLoader extends DataLoader {
      * @return 带时序数据列表
      */
     public List<SeqDataDO> importData(String tgNo) {
-        List<SeqDataDO> seqDataList = new LinkedList<>();
         List<RawDataDO> rawDataList = transferData(loadCurrentDataFromExcel(tgNo));
 
+        return importData(rawDataList);
+    }
+
+    /**
+     * 数据导入重载2，通过直接传入RawDataDo读取，无需指定台区编号
+     * 此重载供外部直接调用
+     *
+     * @param source 数据源（RawDataDO数据列表）
+     * @return 带时序数据列表
+     */
+    public List<SeqDataDO> importData(List<RawDataDO> source) {
+        List<SeqDataDO> seqDataList = new LinkedList<>();
         // 数据转化，给每一个点添加时序标记
-        for (RawDataDO rawDataItem : rawDataList) {
+        for (RawDataDO rawDataItem : source) {
             TreeMap<Integer, Double> seqPoints = new TreeMap<>();
             SeqDataDO seqDataItem = new SeqDataDO();
 
@@ -36,6 +47,7 @@ public class SeqDataLoader extends DataLoader {
                 seqPoints.put(index++, point);
             }
 
+            //复制表头数据
             CopyUtil.copyHeadersToDataTuple(rawDataItem, seqDataItem);
             seqDataItem.setSeqPoints(seqPoints);
             seqDataList.add(seqDataItem);
