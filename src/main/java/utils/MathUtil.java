@@ -1,9 +1,11 @@
 package utils;
 
 import enums.math.PlotBoxEnum;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,19 +49,20 @@ public class MathUtil {
      */
     public static HashMap<PlotBoxEnum, Double> generatePlotBox(List<Double> source) {
         // 首先进行排序
-        Collections.sort(source);
+        List<Double> copyOfSource = new LinkedList<>(source);
+        Collections.sort(copyOfSource);
         HashMap<PlotBoxEnum, Double> plotModel = new HashMap<>();
 
         // 确定箱型图上下边缘和中位点
-        plotModel.put(PlotBoxEnum.MAX, source.get(source.size() - 1));
-        plotModel.put(PlotBoxEnum.MIN, source.get(0));
-        plotModel.put(PlotBoxEnum.MID, source.get(source.size() / 2));
+        plotModel.put(PlotBoxEnum.MAX, copyOfSource.get(copyOfSource.size() - 1));
+        plotModel.put(PlotBoxEnum.MIN, copyOfSource.get(0));
+        plotModel.put(PlotBoxEnum.MID, copyOfSource.get(copyOfSource.size() / 2));
 
         // 确定箱型图上下四分位点
         // 首先明确四分位位置
         int quartile = source.size() / 4;
-        plotModel.put(PlotBoxEnum.Q3, source.get(source.size() - quartile));
-        plotModel.put(PlotBoxEnum.Q1, source.get(quartile));
+        plotModel.put(PlotBoxEnum.Q3, copyOfSource.get(copyOfSource.size() - quartile));
+        plotModel.put(PlotBoxEnum.Q1, copyOfSource.get(quartile));
         return plotModel;
     }
 }

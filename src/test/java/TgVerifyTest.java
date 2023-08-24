@@ -1,6 +1,8 @@
 import enums.math.PlotBoxEnum;
+import models.pojo.domain.RawDataDO;
 import models.pojo.domain.SeqDataDO;
 import models.tgVerfication.SeqDataLoader;
+import models.tgVerfication.TgFeatureGenerator;
 import org.junit.jupiter.api.Test;
 import utils.MathUtil;
 
@@ -13,11 +15,12 @@ import java.util.List;
  */
 public class TgVerifyTest {
     SeqDataLoader loader = new SeqDataLoader();
+    TgFeatureGenerator generator = new TgFeatureGenerator();
 
     @Test
     void testSeqDataLoad() {
-        List<SeqDataDO> seqData = loader.importData("9992");
+        List<RawDataDO> rawData = loader.importData("9992");
 
-        HashMap<PlotBoxEnum, Double> plotModel = MathUtil.generatePlotBox(seqData.get(3).getSeqPointsWithoutIndex());
+        generator.searchPeekInSequenceCurrentData(rawData.get(0));
     }
 }
