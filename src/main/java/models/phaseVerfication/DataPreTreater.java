@@ -31,8 +31,8 @@ public class DataPreTreater {
             RawDataDO result = new RawDataDO();
 
             // 仅引入非空数据点
-            for (Double point : tuple.getPoints()) {
-                if (point != null) result.appendPoint(point);
+            for (Double point : tuple.getAllPointsInSingleList()) {
+                if (point != null) result.appendSinglePoint(point);
             }
 
             // 将处理后数据添加到结果列表中
@@ -68,10 +68,10 @@ public class DataPreTreater {
             RawDataDO result = new RawDataDO();
 
             // 计算均值
-            Double average = getAverageOfDoubleList(tuple.getPoints());
-            for (Double point : tuple.getPoints()) {
+            Double average = getAverageOfDoubleList(tuple.getAllPointsInSingleList());
+            for (Double point : tuple.getAllPointsInSingleList()) {
                 // 去均值
-                result.appendPoint(point - average);
+                result.appendSinglePoint(point - average);
             }
 
             // 将处理后数据添加到结果列表中

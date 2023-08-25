@@ -1,6 +1,5 @@
 import enums.math.PlotBoxEnum;
 import models.pojo.domain.RawDataDO;
-import models.pojo.domain.SeqDataDO;
 import models.tgVerfication.SeqDataLoader;
 import models.tgVerfication.TgFeatureGenerator;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,8 @@ public class TgVerifyTest {
 
     @Test
     void testSeqDataLoad() {
-        List<RawDataDO> rawData = loader.importData("9992");
+        List<RawDataDO> rawData = loader.importData("4134");
 
-        generator.searchPeekInSequenceCurrentData(rawData.get(0));
+        generator.generateFeature(rawData.get(0));
     }
 }

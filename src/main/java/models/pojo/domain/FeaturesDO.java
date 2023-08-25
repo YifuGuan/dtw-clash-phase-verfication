@@ -2,6 +2,8 @@ package models.pojo.domain;
 
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,5 +12,13 @@ import java.util.List;
  */
 @Data
 public class FeaturesDO {
-    private List<PeekDO> peeks;
+    private HashMap<Integer, List<PeekDO>> peeks;
+
+    public FeaturesDO() {
+        this.peeks = new HashMap<>();
+    }
+
+    public void appendDayPeeks(List<PeekDO> dayPeeks, Integer dayIndex) {
+        peeks.put(dayIndex, dayPeeks);
+    }
 }

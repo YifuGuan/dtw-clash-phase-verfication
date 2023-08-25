@@ -65,4 +65,20 @@ public class MathUtil {
         plotModel.put(PlotBoxEnum.Q1, copyOfSource.get(quartile));
         return plotModel;
     }
+
+    /**
+     * 算出特定范围下，实数列表的最大值
+     *
+     * @param start 起始下表
+     * @param end   终点下表
+     * @param list  数据列表
+     * @return [list(start), list(end)]范围内的最大值（含两端）
+     */
+    public static Double maxInList(Integer start, Integer end, List<Double> list) {
+        Double max = -100000d;
+        for (int i = start; i <= end; i++) {
+            if (list.get(i) > max) max = list.get(i);
+        }
+        return max;
+    }
 }

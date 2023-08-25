@@ -1,7 +1,6 @@
 package models.tgVerfication;
 
 import models.pojo.domain.RawDataDO;
-import models.pojo.domain.SeqDataDO;
 import models.pojo.dto.MeterDataDTO;
 import models.publicModels.DataLoader;
 import utils.CopyUtil;
@@ -34,6 +33,7 @@ public class SeqDataLoader extends DataLoader {
      * @return 带时序数据列表
      */
     public List<RawDataDO> importData(List<MeterDataDTO> originData) {
+        // 过滤originData，如果其为
         return transferData(originData);
     }
 }

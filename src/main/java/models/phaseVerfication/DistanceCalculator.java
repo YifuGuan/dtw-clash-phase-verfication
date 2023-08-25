@@ -26,7 +26,7 @@ public class DistanceCalculator {
      */
     private Double distanceBetweenTwoMeter(RawDataDO meter1, RawDataDO meter2) {
         DtwDistanceCounter counter = new DtwDistanceCounter();
-        return counter.calculateDtwDistance(meter1.getPoints(), meter2.getPoints());
+        return counter.calculateDtwDistance(meter1.getAllPointsInSingleList(), meter2.getAllPointsInSingleList());
     }
 
     /**

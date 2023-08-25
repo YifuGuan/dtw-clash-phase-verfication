@@ -6,6 +6,7 @@ import com.alibaba.excel.read.listener.ReadListener;
 import models.pojo.domain.RawDataDO;
 import models.pojo.dto.MeterDataDTO;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,13 +74,24 @@ public class DataLoader {
     protected List<RawDataDO> transferData(List<MeterDataDTO> originData) {
         // 将原始数据转化为生数据
         List<RawDataDO> rawData = new LinkedList<>();
+        HashMap<String, RawDataDO> record = new HashMap<>();
 
         // 采用反射方式将数据全部读入到rawData的列表当中
         for (MeterDataDTO tuple : originData) {
-            // 生数据导入，先读入基本属性数据
-            RawDataDO rawDataDO = new RawDataDO();
-            rawDataDO.setTgId(tuple.getTgNo());
-            rawDataDO.setAssetNo(tuple.getAssetNo());
+            RawDataDO rawDataDO;
+            // 首先检查该天数据是否属于已有表
+            if (record.containsKey(tuple.getAssetNo())) {
+                // 如果之前导入过，直接获取该DO引用，点数据直接铺在列表后
+                rawDataDO = record.get(tuple.getAssetNo());
+            } else {
+                // 如果没到如果，则初始化DO对象，并填充资产号和台区号值
+                rawDataDO = new RawDataDO();
+                rawDataDO.setTgId(tuple.getTgNo());
+                rawDataDO.setAssetNo(tuple.getAssetNo());
+                record.put(tuple.getAssetNo(), rawDataDO);
+                // 将该引用添加到列表中
+                rawData.add(rawDataDO);
+            }
 
             // 利用反射读取测量数据
             List<Double> points = new LinkedList<>();
@@ -91,8 +103,7 @@ public class DataLoader {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            rawDataDO.setPoints(points);
-            rawData.add(rawDataDO);
+            rawDataDO.appendDayPoints(points);
         }
 
         return rawData;
